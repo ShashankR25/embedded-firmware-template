@@ -1,0 +1,5 @@
+* @your-org/firmware-maintainers
+/app/ @your-org/control-team
+/platform/ @your-org/firmware-maintainers
+/hal/ @your-org/firmware-maintainers
+/docs/ @your-org/firmware-maintainers

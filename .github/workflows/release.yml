@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Arm GNU Toolchain
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+        with:
+          release: '13.3.Rel1'
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install cmake ninja
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja -DBOARD=nucleo_f103rb
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Package firmware
+        run: |
+          mkdir -p dist
+          cp build/*.elf dist/ || true
+          cp build/*.map dist/ || true
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-release
+          path: dist/

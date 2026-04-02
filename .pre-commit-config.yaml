@@ -1,0 +1,31 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+      - id: detect-private-key
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v18.1.8
+    hooks:
+      - id: clang-format
+        files: '\.(c|h|cpp|hpp)$'
+  - repo: https://github.com/markdownlint/markdownlint
+    rev: v0.13.0
+    hooks:
+      - id: markdownlint
+  - repo: local
+    hooks:
+      - id: cmake-lint
+        name: cmake lint
+        entry: bash -c 'command -v cmake >/dev/null && cmake -S . -B build-precommit >/dev/null || true'
+        language: system
+        pass_filenames: false
+      - id: clang-tidy-placeholder
+        name: clang-tidy placeholder
+        entry: bash -c 'echo "Run clang-tidy in CI or local devcontainer"'
+        language: system
+        pass_filenames: false

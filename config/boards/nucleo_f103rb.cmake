@@ -1,0 +1,3 @@
+set(MCU_FAMILY STM32F1)
+set(MCU_PART STM32F103RB)
+set(CPU cortex-m3)
